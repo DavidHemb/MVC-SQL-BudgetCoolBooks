@@ -1,0 +1,30 @@
+﻿
+.audit-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.audit-display {
+    display: grid;
+    justify-content: center;
+    margin-top: 3em;
+}
+
+.card {
+    width: 50vw;
+}
+
+.moderator-settings {
+    display: flex;
+    flex-direction: row;
+}
+
+.moderator-titles {
+    text-align: left;
+    margin-top: 3em;
+}
+
+.table {
+    border: 1px solid black;
+}

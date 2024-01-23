@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Budget_CoolBooks.Models.Genre>
+
+@{
+    Layout = "/Views/Shared/Admin/_AdminLayout.cshtml";
+    ViewData["Title"] = "Genres";
+}
+
+
+<div class="">
+    <a onclick="showInPopup('@Url.Action("AddOrEdit","Genres",null,Context.Request.Scheme)','Create New Genre')" class="btn btn-success float-end me-3">
+        <i class="fa-solid fa-plus me-2"></i>Create new genre
+    </a>
+    <h1 class="fs-2 text-black">List of genres</h1>
+</div>
+
+<div id="view-all">
+    @await Html.PartialAsync("_ViewAll", Model)
+</div>
+

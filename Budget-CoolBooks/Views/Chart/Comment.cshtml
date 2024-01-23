@@ -1,0 +1,110 @@
+﻿@using System.Text.Json
+@{
+    Layout = "/Views/Shared/Admin/_AdminLayout.cshtml";
+    ViewData["Title"] = "Chart | Comment";
+}
+
+
+<div class="col-12">
+    <!-- Breadcrumb -->
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-area="" asp-controller="Admin" asp-action="Index">Dash Board</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chart for comments</li>
+        </ol>
+    </nav>
+
+    <div class="col-12 d-flex justify-content-between">
+        <!-- Header -->
+        <h2 class="text-primary">Comments</h2>
+
+        <!-- Filter -->
+        <div class="mt-2 mb-2 d-flex">
+            <!-- dropdown  Filter-->
+            <div class="dropdown ms-2 me-5">
+                <a class="btn  btn-outline-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    @ViewBag.commentFilter
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <form method="post" asp-controller="Chart" asp-action="Comment">
+                            <input type="hidden" name="filter" value="Day">
+                            <button input="submit" class="dropdown-item">Day</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form method="post" asp-controller="Chart" asp-action="Comment">
+                            <input type="hidden" name="filter" value="Week">
+                            <button input="submit" class="dropdown-item">Week</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form method="post" asp-controller="Chart" asp-action="Comment">
+                            <input type="hidden" name="filter" value="Genre">
+                            <button input="submit" class="dropdown-item">Genre</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form method="post" asp-controller="Chart" asp-action="Comment">
+                            <input type="hidden" name="filter" value="Author">
+                            <button input="submit" class="dropdown-item">Author</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FromDate and EndDate -->
+    <div class="my-2">
+        <form method="post" asp-controller="Chart" asp-action="Comment" class="d-flex col-10">
+            <div class="row col-4">
+                <label for="" class="col-form-label-sm col-2">From</label>
+                <div class="col-9">
+                    <input type="datetime-local" name="fromDate" id="fromDate" class="form-control form-control-sm">
+                </div>
+            </div>
+
+            <div class="row col-4">
+                <label for="" class="col-form-label-sm col-1">To</label>
+                <div class="col-9">
+                    <input type="datetime-local" name="endDate" id="endDate" class="form-control form-control-sm">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button input="submit" class="btn btn-success btn-sm">Search</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Chart HTML-->
+    <div class="col-12" style="height: 400px;">
+        <canvas id="myChart" class="col-12"></canvas>
+    </div>
+
+</div>
+
+
+<!-- Chart CDN-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Chart -->
+<script type="text/javascript">
+    const ctx = document.getElementById('myChart');
+    var labels = @Html.Raw(JsonSerializer.Serialize(ViewBag.chartLabels));
+    var data = @Html.Raw(JsonSerializer.Serialize(ViewBag.chartData));
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Comments',
+                data: data,
+                borderWidth: 1,
+                borderColor: '#36A2EB',
+                backgroundColor: '#0d6efd',
+            }]
+        },
+    });
+</script>

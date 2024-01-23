@@ -1,0 +1,139 @@
+﻿@{    
+    Layout = "_Layout";
+    ViewData["Title"] = "Create A Review";
+}
+@model Budget_CoolBooks.ViewModels.ReviewcardViewModel
+
+    <link rel="stylesheet" href="~/css/reviewform.css" asp-append-version="true" />
+
+    <script src="https://use.fontawesome.com/a6f0361695.js"></script>
+ 
+    
+<!-- FOR CREATING NEW REVIEW -->
+@if (Model.Review == null)
+{
+    <h2 id="fh2">WE APPRECIATE YOUR REVIEW!</h2>
+    <h6 id="fh6">Your review will help us to improve our recomendation of books tailored to you.</h6>
+
+
+    <form method="post" asp-controller="Review" asp-action="Create">
+
+        <!-- ADD BOOK TITLE, AUTHOR , AND MINI LOGO -->
+        <img src="@Model.ReviewBook[0].Imagepath" height="80px" width="80px">
+        <h1>@Model.ReviewBook[0].Title</h1>
+        <h3>By @Model.ReviewAuthor[0].Firstname @Model.ReviewAuthor[0].Lastname</h3>
+
+        <div class="pinfo">How do you rate this book?.</div>
+
+        <!-- DROPDOWN MENU FOR RATING, CAN BE REPLACED WITH RADIO BTN STARS -->
+        <div class="form-group">
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group" style="display: grid; grid-template-columns: 1fr;">
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; text-align:center;">
+                        <p class="fa fa-star star-active mx-1">1</p>
+                        <p class="fa fa-star star-active mx-1">2</p>
+                        <p class="fa fa-star star-active mx-1">3</p>
+                        <p class="fa fa-star star-active mx-1">4</p>
+                        <p class="fa fa-star star-active mx-1">5</p>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
+                        <input type="radio" id="1" name="rating" value="1">
+                        <input type="radio" id="2" name="rating" value="2">
+                        <input type="radio" id="3" name="rating" value="3">
+                        <input type="radio" id="4" name="rating" value="4">
+                        <input type="radio" id="5" name="rating" value="5">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADD REVIEW TITLE -->
+        <div class="pinfo">Title of review.</div>
+        <div class="form-group">
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                    <textarea class="form-control" name="title" rows="1" required></textarea>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ADD REVIEW TEXT -->
+        <div class="pinfo">Write your feedback.</div>
+        <div class="form-group">
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                    <textarea class="form-control" name="text" rows="3" required></textarea>
+
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="id" value="@Model.ReviewBook[0].Id">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+}
+
+<!-- FOR EDITING  EXISTING REVIEW -->
+@if (Model.Review != null)
+{
+    <h2 id="fh2">Edit Your Review</h2>
+    <h6 id="fh6">Please make your desired changes and hit submit.</h6>
+
+
+    <form method="post" asp-controller="Review" asp-action="Edit">
+
+        <!-- ADD BOOK TITLE, AUTHOR , AND MINI LOGO -->
+        <h1>BOOKINFO</h1>
+
+        <div class="pinfo">Edit Your Rating</div>
+
+        <!-- DROPDOWN MENU FOR RATING, CAN BE REPLACED WITH RADIO BTN STARS -->
+        <div class="form-group">
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                    <select class="form-control" name="rating">
+                        <option value=1>1</option>
+                        <option value=2>2</option>
+                        <option value=3>3</option>
+                        <option value=4>4</option>
+                        <option value=5>5</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADD REVIEW TITLE -->
+        <div class="pinfo">Edit Your Review Title.</div>
+        <div class="form-group">
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                    <textarea class="form-control" name="title" rows="1">@Model.Review[0].Title</textarea>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ADD REVIEW TEXT -->
+        <div class="pinfo">Edit Your Feedback.</div>
+        <div class="form-group">
+            <div class="col-md-4 inputGroupContainer">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil"></i></span>
+                    <textarea class="form-control" name="text" rows="3">@Model.Review[0].Text</textarea>
+
+                </div>
+            </div>
+        </div>
+        @*<input type="hidden" name="id" value="@Model.ReviewBook[0].Id">*@
+        <input type="hidden" name="id" value="@Model.Review[0].Id">
+        <input type="hidden" name="test" value="@Model.Test">
+        <input type="hidden" name="bookid" value="@Model.ReviewBook[0].Id">
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+}

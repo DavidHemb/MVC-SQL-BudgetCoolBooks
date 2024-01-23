@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "/Views/Shared/Admin/_AdminLayout.cshtml";
+    ViewData["Title"] = "Admin - Edit books";
+}
+@model Budget_CoolBooks.ViewModels.AdminBooksViewModel
+<div class="">
+    <a asp-controller="adminBook" asp-action="AddBookGenre" asp-route-id="@Model.Book.Id" class="btn btn-success float-end me-3">
+        <i class="fa-solid fa-plus me-2"></i>Add genre to book
+    </a>
+</div>
+<div class="">
+    <a asp-controller="adminBook" asp-action="AddBookAuthor" asp-route-id="@Model.Book.Id" class="btn btn-success float-end me-3">
+        <i class="fa-solid fa-plus me-2"></i>Add author to book
+    </a>
+</div>
+
+<h5>Edit - @Model.Book.Title</h5>
+<form method="post" asp-controller="AdminBook" asp-action="Edit">
+    <div class="mb-3">
+        <label for="Title" class="form-label">Title</label>
+        <input type="text" class="form-control" name="title" placeholder="@Model.Book.Title">
+    </div>
+
+    <div class="mb-3">
+        <label for="Description" class="form-label">Description</label>
+        <input type="text" class="form-control" name="description" placeholder="New description">
+    </div>
+
+    <div class="mb-3">
+        <label for="ISBN" class="form-label">ISBN</label>
+        <input type="text" class="form-control" name="isbn" placeholder="@Model.Book.ISBN">
+    </div>
+
+    <div class="mb-3">
+        <label for="ImagePath" class="form-label">Image Path</label>
+        <input type="text" class="form-control" name="imgpath" placeholder="@Model.Book.Imagepath">
+    </div>
+
+   @* <div class="mb-3">
+        @if (Model.Genres != null)
+        {
+                <select class="form-select" aria-label="Change/choose genre" name="genreSelect" id="genre-dropdown">
+                    <option selected>Choose genre</option>
+                @foreach (var genre in Model.Genres)
+                {
+                   <option value="@genre.Id">@genre.Name</option>
+                }
+                </select>
+        }
+    </div>*@
+    <input type="hidden" name="bookId" value="@Model.Book.Id">
+    <button type="submit" class="btn btn-primary">Edit book</button>
+</form>
+

@@ -1,0 +1,89 @@
+﻿<link rel="stylesheet" href="~/css/rating.css" asp-append-version="true" />
+<!-- Varibles -->
+@{
+    var TotalReviews = 0;
+    int loop = 0;
+}
+<!-- Total reviews -->
+    @foreach (int rating in Model.RatingsByValue)
+    {
+        TotalReviews += rating;
+    }
+<!-- Card -->
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row justify-content-center">
+        <div style="padding-left: 5%; padding-right: 5%;">
+            <div class="card1">
+                <!-- Total average -->
+                <div class="row justify-content-left d-flex">
+                    <div class="col-md-4 d-flex flex-column">
+                        <div class="rating-box">
+                            <h1 class="pt-4">@Model.AverageRating</h1>
+                            <p class="">out of 5</p>
+                        </div>
+                        <div>
+                            <!-- Stars loop -->
+                            @for (int i = 0; i < 5; i++){
+                                    if (Math.Round(Model.AverageRating, 0) < i + 1)
+                                {
+                                        <span class="fa fa-star star-inactive mx-1"></span>
+                                }
+                                else
+                                {
+                                        <span class="fa fa-star star-active mx-1"></span>
+                                }
+                        }</div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="rating-bar0 justify-content-center">
+                            <!-- Bars and individual grades -->
+                            <table class="text-left mx-auto">
+                                @foreach (var rating in Model.RatingsByValue){
+                                    <tr>@{
+                                            <!-- Loop out grades -->
+                                            if (loop == 0)
+                                            {
+                                                <td class="rating-label" style="color: gold">Waw..</td>
+                                            }
+                                            else if (loop == 1)
+                                            {
+                                                <td class="rating-label" style="color: green">Good</td>
+                                            }
+                                            else if (loop == 2)
+                                            {
+                                                <td class="rating-label" style="color: white">Okay</td>
+                                            }
+                                            else if (loop == 3)
+                                            {
+                                                <td class="rating-label" style="color: red">Bad</td>
+                                            }
+                                            else if (loop == 4)
+                                            {
+                                                <td class="rating-label" style="color: black">Poopie</td>
+                                            }
+                                            <!-- Calc Procent and round -->
+                                            int Sum = @Model.RatingsByValue[loop];
+                                            double Procent = (double)Sum / (double)TotalReviews * 10;
+                                            Procent = Math.Round(Procent, 0);
+                                        }<!-- Fill bars based on procent on grade -->
+                                        <td class="rating-bar">
+                                            <div class="bar-container">                
+                                                <div class="bar-@Procent"></div>
+                                            </div>
+                                        </td>
+                                    <!-- Write out number of reviews on grade -->
+                                    <td class="text-right">@Sum</td>
+                                    </tr>
+                                    <!-- Calc loop -->
+                                    {
+                                        loop++;
+                                    }
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

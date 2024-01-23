@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Bookcard";
+}
+<!-- CSS -->
+<link rel="stylesheet" href="~/css/bookcard.css" asp-append-version="true" />
+<!-- Model -->
+@model Budget_CoolBooks.ViewModels.BookcardViewModel
+<!-- View -->
+<div class="card mb-3" style="max-width: 650px;">
+    <div class="row g-0">
+        <!-- Title -->
+        <h2 class="card-title">@Model.Books[0].Title</h2>
+        <!-- Author/s-->
+        @foreach (var author in Model.Authors)
+        {
+            <form method="get" asp-controller="Home" asp-action="AuthorDetails">        
+                <h4 class="card-text" style="padding-bottom: 3%;">
+                    <input type="hidden" name="id" value="@author.Id">
+                    <button input="submit" class="filter-button">
+                        @author.Firstname @author.Lastname
+                    </button>
+                </h4>
+            </form>
+        }
+        <div class="col-md-4" style="margin-bottom: auto; margin-top: auto;">
+            <!-- Img -->
+            <img src="@Model.Books[0].Imagepath" class="img-fluid rounded-start" alt="" style="margin-left: 5%;">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <!-- Description -->
+                <p class="cardtext">@Model.Books[0].Description</p>
+            </div>
+            <!-- Review -->
+        </div>
+        <!-- Average & statiscics -->
+        @if (Model.IsNotReviewed == 0)
+        {
+            <div style="width: 150%;">
+                <partial name="_AveragePartial" />
+            </div>
+        }
+        <!-- Review button -->
+        <div class="Review">
+            <a asp-controller="Review" asp-action="Create" asp-route-id="@Model.Books[0].Id">
+                <button class="btn btn-primary btn sm">Review</button>
+            </a>
+        </div>
+        <h3 style="margin-bottom: 0; padding-bottom: 0; margin-top: 1%;">Reviews:</h3>
+    </div>
+</div>
+<!-- Top review -->
+<div>
+    @{
+        if (Model.IsNotReviewed == 0)
+        {
+            <partial name="_ReviewPartial"/>
+        }
+        else if (Model.IsNotReviewed == 1)
+        {
+        <!-- Be the first to review text -->
+            <div class="card">
+                <div class="cardinfo">
+                    <h4 class="cardinfo">Be the first to review this book!</h4>
+                </div>
+            </div>
+        }
+    }
+</div>

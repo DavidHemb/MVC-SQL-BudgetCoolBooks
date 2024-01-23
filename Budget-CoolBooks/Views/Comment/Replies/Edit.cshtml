@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Edit reply";
+}
+<link rel="stylesheet" href="~/css/commentreplyview.css" asp-append-version="true" />
+@model Budget_CoolBooks.ViewModels.CommentViewModel
+
+
+<div class="comment-section">
+    <form method="post" asp-controller="Comment" asp-action="EditReply">
+        <div class="mb-3" id="comment-box">
+            <label for="EditCommentText" class="form-label"><h5>Alter your reply</h5></label>
+            <input type="text" class="form-control" rows="6" name="editedReply" value="@Model.Reply.Text"></input>
+        </div>
+
+        <input type="hidden" name="replyId" value="@Model.Reply.Id">
+        <input type="hidden" name="bookId" value="@Model.BookId">
+        <input type="hidden" name="redirect" value="@Model.redirect">
+        <button input="submit" class="btn btn-primary btn sm">Edit reply</button>
+    </form>
+</div>
